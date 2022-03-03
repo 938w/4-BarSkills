@@ -75,15 +75,19 @@ pid PID;
 int main() {
   // Initializing Robot Configuration. DO NOT REMOVE!
   vexcodeInit();
+  //Activate Clamp (move up)
+  Clamp.set(true); 
   //Drive to neutral goal ahead
   Drivetrain.driveFor(forward, 55, inches);
   //wait so goal doesn't bounce away
   //Clamp goal
   Clamp.set(false);
   //Lift the goal slightly (only slightly to prevent excessive tipping)
-  FourBar.spinFor(120, degrees, 100, rpm);
+  FourBar.spinFor(300, degrees, 100, rpm);
+  //Move forward more
+  Drivetrain.driveFor(forward, 15, inches); 
   //Turn to platform  
-  Drivetrain.turnFor(30, degrees, 200, rpm);
+  //Drivetrain.turnFor(30, degrees, 200, rpm);
   Drivetrain.stop();
   
 
