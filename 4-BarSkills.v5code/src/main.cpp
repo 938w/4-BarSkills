@@ -85,9 +85,10 @@ int main() {
   //Lift the goal slightly (only slightly to prevent excessive tipping)
   FourBar.spinFor(300, degrees, 100, rpm);
   //Move forward more
-  Drivetrain.driveFor(forward, 15, inches); 
+  Drivetrain.driveFor(forward, 17, inches);
+  Drivetrain.stop(); 
   //Turn to platform  
-  //Drivetrain.turnFor(30, degrees, 200, rpm);
+  Drivetrain.turnFor(30, degrees, 200, rpm);
   Drivetrain.stop();
   
 
