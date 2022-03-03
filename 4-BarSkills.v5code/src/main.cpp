@@ -76,10 +76,10 @@ int main() {
   // Initializing Robot Configuration. DO NOT REMOVE!
   vexcodeInit();
   //Drive to neutral goal ahead
-  Drivetrain.driveFor(forward, 55, inches); 
+  Drivetrain.driveFor(forward, 55, inches);
+  //wait so goal doesn't bounce away
   //Clamp goal
   Clamp.set(false);
-  wait (100, msec); 
   //Lift the goal slightly (only slightly to prevent excessive tipping)
   FourBar.spinFor(120, degrees, 100, rpm);
   //Turn to platform  
