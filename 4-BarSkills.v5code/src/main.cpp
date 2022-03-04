@@ -31,12 +31,12 @@ class pid {
       Inertial.resetRotation();
       if (velocity > 0) {
         //driving forward
-        while (((LeftDriveSmart.rotation(rotationUnits::deg)+RightDriveSmart.rotation(rotationUnits::deg))/2)*12.57/355 < distance) {
+        while (((LeftDriveSmart.rotation(rotationUnits::deg)+RightDriveSmart.rotation(rotationUnits::deg))/2)*12.57/338 < distance) {
           //getting closer
-          if(((LeftDriveSmart.rotation(rotationUnits::deg)+RightDriveSmart.rotation(rotationUnits::deg))/2)*12.57/355 > (distance-6)) {
+          if(((LeftDriveSmart.rotation(rotationUnits::deg)+RightDriveSmart.rotation(rotationUnits::deg))/2)*12.57/338 > (distance-6)) {
 
             //actual pid
-            double out = distance-(((LeftDriveSmart.rotation(rotationUnits::deg)+RightDriveSmart.rotation(rotationUnits::deg))/2)*12.57/355);
+            double out = distance-(((LeftDriveSmart.rotation(rotationUnits::deg)+RightDriveSmart.rotation(rotationUnits::deg))/2)*12.57/338);
             LeftDriveSmart.spin(vex::directionType::fwd, (velocity-out*slowdown)-(dir-(Inertial.yaw()*porportion)), vex::velocityUnits::pct);
             RightDriveSmart.spin(vex::directionType::fwd, (velocity-out*slowdown)+(dir-(Inertial.yaw()*porportion)), vex::velocityUnits::pct);
           } else {
@@ -48,11 +48,11 @@ class pid {
         }
       } else {
         //driving backwards
-        while (((LeftDriveSmart.rotation(rotationUnits::deg)+RightDriveSmart.rotation(rotationUnits::deg))/2)*12.57/355 > distance) {
+        while (((LeftDriveSmart.rotation(rotationUnits::deg)+RightDriveSmart.rotation(rotationUnits::deg))/2)*12.57/338 > distance) {
           //getting closer 
-          if(((LeftDriveSmart.rotation(rotationUnits::deg)+RightDriveSmart.rotation(rotationUnits::deg))/2)*12.57/355 < (distance+6)) {
+          if(((LeftDriveSmart.rotation(rotationUnits::deg)+RightDriveSmart.rotation(rotationUnits::deg))/2)*12.57/338 < (distance+6)) {
             //actual pid
-            double out = distance-(((LeftDriveSmart.rotation(rotationUnits::deg)+RightDriveSmart.rotation(rotationUnits::deg))/2)*12.57/355);
+            double out = distance-(((LeftDriveSmart.rotation(rotationUnits::deg)+RightDriveSmart.rotation(rotationUnits::deg))/2)*12.57/338);
             LeftDriveSmart.spin(vex::directionType::fwd, (velocity-out*slowdown)+(dir-(Inertial.yaw()*porportion)), vex::velocityUnits::pct);
             RightDriveSmart.spin(vex::directionType::fwd, (velocity-out*slowdown)-(dir-(Inertial.yaw()*porportion)), vex::velocityUnits::pct);
           } else{
@@ -78,10 +78,10 @@ int main() {
  vexcodeInit();
   Mobile.Screen.print(Inertial.heading());
   //Set Velocity
-  leftMotorA.setVelocity(55, percent);
-  leftMotorB.setVelocity(55, percent);
-  rightMotorA.setVelocity(55, percent);
-  rightMotorB.setVelocity(55, percent);
+  leftMotorA.setVelocity(38, percent);
+  leftMotorB.setVelocity(38, percent);
+  rightMotorA.setVelocity(38, percent);
+  rightMotorB.setVelocity(38, percent);
   //Activate Clamp (move up)
   Clamp.set(true); 
   //Drive to neutral goal ahead
@@ -99,7 +99,11 @@ int main() {
   Drivetrain.turnFor(left, 30, degrees); 
   Mobile.Screen.print(Inertial.heading());
   //Drive to platform
-  Drivetrain.driveFor(reverse, 15, inches); 
+  Drivetrain.driveFor(reverse, 18, inches); 
+  //Lift goal higher
+  FourBar.spinFor(525, degrees);
+  //Move forward a little more
+  Drivetrain.driveFor(reverse, 3, inches);  
   
 
 
