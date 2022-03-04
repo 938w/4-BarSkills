@@ -96,12 +96,12 @@ int main() {
   Drivetrain.driveFor(reverse, 17, inches);
   Drivetrain.stop(); 
   //Turn to platform
-  Drivetrain.turnFor(left, 45, degrees); 
+  Drivetrain.turnFor(left, 40, degrees); 
   Mobile.Screen.print(Inertial.heading());
   //Drive to platform
   Drivetrain.driveFor(reverse, 18, inches); 
   //Lift goal higher
-  FourBar.spinFor(660, degrees);
+  FourBar.spinFor(650, degrees);
   //Move forward a little more
   Drivetrain.driveFor(reverse, 19, inches);
   Drivetrain.stop();
