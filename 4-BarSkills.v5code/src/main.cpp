@@ -18,7 +18,8 @@
 #include "vex.h"
 
 using namespace vex;
-/*class pid {
+/*
+class pid {
   private:
     void linedrive (double distance, double dir, float velocity, double porportion, double slowdown) {
       //higher porportion causes the pid "reacting" turning amount to be higher
@@ -30,12 +31,12 @@ using namespace vex;
       Inertial.resetRotation();
       if (velocity > 0) {
         //driving forward
-        while (((LeftDriveSmart.rotation(rotationUnits::deg)+RightDriveSmart.rotation(rotationUnits::deg))/2)*12.57/360 < distance) {
+        while (((LeftDriveSmart.rotation(rotationUnits::deg)+RightDriveSmart.rotation(rotationUnits::deg))/2)*12.57/355 < distance) {
           //getting closer
-          if(((LeftDriveSmart.rotation(rotationUnits::deg)+RightDriveSmart.rotation(rotationUnits::deg))/2)*12.57/360 > (distance-6)) {
+          if(((LeftDriveSmart.rotation(rotationUnits::deg)+RightDriveSmart.rotation(rotationUnits::deg))/2)*12.57/355 > (distance-6)) {
 
             //actual pid
-            double out = distance-(((LeftDriveSmart.rotation(rotationUnits::deg)+RightDriveSmart.rotation(rotationUnits::deg))/2)*12.57/360);
+            double out = distance-(((LeftDriveSmart.rotation(rotationUnits::deg)+RightDriveSmart.rotation(rotationUnits::deg))/2)*12.57/355);
             LeftDriveSmart.spin(vex::directionType::fwd, (velocity-out*slowdown)-(dir-(Inertial.yaw()*porportion)), vex::velocityUnits::pct);
             RightDriveSmart.spin(vex::directionType::fwd, (velocity-out*slowdown)+(dir-(Inertial.yaw()*porportion)), vex::velocityUnits::pct);
           } else {
@@ -47,11 +48,11 @@ using namespace vex;
         }
       } else {
         //driving backwards
-        while (((LeftDriveSmart.rotation(rotationUnits::deg)+RightDriveSmart.rotation(rotationUnits::deg))/2)*12.57/360 > distance) {
+        while (((LeftDriveSmart.rotation(rotationUnits::deg)+RightDriveSmart.rotation(rotationUnits::deg))/2)*12.57/355 > distance) {
           //getting closer 
-          if(((LeftDriveSmart.rotation(rotationUnits::deg)+RightDriveSmart.rotation(rotationUnits::deg))/2)*12.57/360 < (distance+6)) {
+          if(((LeftDriveSmart.rotation(rotationUnits::deg)+RightDriveSmart.rotation(rotationUnits::deg))/2)*12.57/355 < (distance+6)) {
             //actual pid
-            double out = distance-(((LeftDriveSmart.rotation(rotationUnits::deg)+RightDriveSmart.rotation(rotationUnits::deg))/2)*12.57/360);
+            double out = distance-(((LeftDriveSmart.rotation(rotationUnits::deg)+RightDriveSmart.rotation(rotationUnits::deg))/2)*12.57/355);
             LeftDriveSmart.spin(vex::directionType::fwd, (velocity-out*slowdown)+(dir-(Inertial.yaw()*porportion)), vex::velocityUnits::pct);
             RightDriveSmart.spin(vex::directionType::fwd, (velocity-out*slowdown)-(dir-(Inertial.yaw()*porportion)), vex::velocityUnits::pct);
           } else{
@@ -73,23 +74,32 @@ using namespace vex;
 pid PID;
 */
 int main() {
-  // Initializing Robot Configuration. DO NOT REMOVE!
-  vexcodeInit();
+  // // Initializing Robot Configuration. DO NOT REMOVE!
+ vexcodeInit();
+  Mobile.Screen.print(Inertial.heading());
+  //Set Velocity
+  leftMotorA.setVelocity(55, percent);
+  leftMotorB.setVelocity(55, percent);
+  rightMotorA.setVelocity(55, percent);
+  rightMotorB.setVelocity(55, percent);
   //Activate Clamp (move up)
   Clamp.set(true); 
   //Drive to neutral goal ahead
-  Drivetrain.driveFor(forward, 55, inches);
+  Drivetrain.driveFor(reverse, 55, inches);
   //wait so goal doesn't bounce away
+  wait(500, msec);
   //Clamp goal
   Clamp.set(false);
   //Lift the goal slightly (only slightly to prevent excessive tipping)
-  FourBar.spinFor(300, degrees, 100, rpm);
+  FourBar.spinFor(500, degrees, 100, rpm);
   //Move forward more
-  Drivetrain.driveFor(forward, 17, inches);
+  Drivetrain.driveFor(reverse, 17, inches);
   Drivetrain.stop(); 
-  //Turn to platform  
-  Drivetrain.turnFor(30, degrees, 200, rpm);
-  Drivetrain.stop();
+  //Turn to platform
+  Drivetrain.turnFor(left, 30, degrees); 
+  Mobile.Screen.print(Inertial.heading());
+  //Drive to platform
+  Drivetrain.driveFor(reverse, 15, inches); 
   
 
 

@@ -8,11 +8,11 @@ using code = vision::code;
 brain  Brain;
 
 // VEXcode device constructors
-motor leftMotorA = motor(PORT1, ratio18_1, true);
-motor leftMotorB = motor(PORT3, ratio18_1, true);
+motor leftMotorA = motor(PORT1, ratio18_1, false);
+motor leftMotorB = motor(PORT3, ratio18_1, false);
 motor_group LeftDriveSmart = motor_group(leftMotorA, leftMotorB);
-motor rightMotorA = motor(PORT15, ratio18_1, false);
-motor rightMotorB = motor(PORT4, ratio18_1, false);
+motor rightMotorA = motor(PORT15, ratio18_1, true);
+motor rightMotorB = motor(PORT4, ratio18_1, true);
 motor_group RightDriveSmart = motor_group(rightMotorA, rightMotorB);
 inertial Inertial = inertial(PORT20);
 smartdrive Drivetrain = smartdrive(LeftDriveSmart, RightDriveSmart, Inertial, 319.19, 320, 40, mm, 1);
