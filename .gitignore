@@ -7,3 +7,4 @@ compile_commands.json
 4-BarSkills.v5code/build/4BarSkillsv5code.map
 4-BarSkills.v5code/build/src/main.o
 4-BarSkills.v5code/build/src/robot-config.o
+*.o
