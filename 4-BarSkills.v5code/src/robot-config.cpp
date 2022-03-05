@@ -16,8 +16,8 @@ motor rightMotorB = motor(PORT4, ratio18_1, true);
 motor_group RightDriveSmart = motor_group(rightMotorA, rightMotorB);
 inertial Inertial = inertial(PORT20);
 smartdrive Drivetrain = smartdrive(LeftDriveSmart, RightDriveSmart, Inertial, 319.19, 320, 40, mm, 1);
-motor FourBar = motor(PORT10, ratio18_1, true);
-motor ForkLift = motor(PORT5, ratio18_1, false);
+motor FourBar = motor(PORT10, ratio36_1, true);
+motor ForkLift = motor(PORT5, ratio36_1, false);
 digital_out Clamp = digital_out(Brain.ThreeWirePort.A);
 controller Mobile;
 

@@ -18,7 +18,7 @@
 #include "vex.h"
 
 using namespace vex;
-
+/*
 class pid {
   private:
     void linedrive (double distance, double dir, float velocity, double porportion, double slowdown) {
@@ -72,9 +72,11 @@ class pid {
     }
 };
 pid PID;
+*/
 int main() {
   // // Initializing Robot Configuration. DO NOT REMOVE!
  vexcodeInit();
+  Brain.Screen.print("att2");
   Mobile.Screen.print(Inertial.heading());
   //Set Velocity
   leftMotorA.setVelocity(100, percent);
@@ -82,20 +84,32 @@ int main() {
   rightMotorA.setVelocity(100, percent);
   rightMotorB.setVelocity(100, percent);
   //Lower fork lift
-  ForkLift.spinFor(reverse, 1100, degrees, 100, rpm); 
+  ForkLift.spinFor(reverse, 550, degrees, 100, rpm); 
   // Drive to blue goal
-  Drivetrain.driveFor(forward, 16, inches, 140, rpm);
+  Drivetrain.driveFor(forward, 15.5, inches, 140, rpm);
   Drivetrain.stop();
   //Pick up
-  ForkLift.spinFor(forward, 500, degrees, 100, rpm); 
+  ForkLift.spinFor(forward, 350, degrees, 100, rpm); 
+  //drive backwards a little bit
+  Drivetrain.driveFor(reverse, 16, inches, 140, rpm);
   //Turn 90 degrees to face neutral goal
-  Drivetrain.turnFor(left, 270, degrees, 100, rpm);
+  Drivetrain.turnToHeading(110, degrees, 100, rpm);
   //Activate clamp
   Clamp.set(true); 
   //Drive to neutral goal
-  Drivetrain.driveFor(reverse, 20, inches, 175, rpm);
+  Drivetrain.driveFor(reverse, 30, inches, 175, rpm);
+  Drivetrain.driveFor(reverse, 10, inches, 90, rpm);
+  Drivetrain.driveFor(reverse, 10, inches, 50, rpm);
+  Drivetrain.stop(brake);
+  wait(0.2, sec);
   //Clamp neutral
-  Clamp.set(false); 
+  Clamp.set(false);
+  //go to platform
+  FourBar.spinFor(forward, 700, degrees, 100, rpm, false);
+  Drivetrain.driveFor(reverse, 35, inches, 170 ,rpm);
+  Drivetrain.driveFor(reverse, 10, inches, 70, rpm);
+  Drivetrain.driveFor(reverse, 10, inches, 50, rpm);
+  FourBar.spinFor(reverse, 50, degrees, false);
 
 
   
