@@ -22,7 +22,7 @@ void pid::linedrive(double distance, double dir, float velocity, double porporti
             RightDriveSmart.rotation(rotationUnits::deg)) /
            2) *
               12.57 / 3100 >
-          (distance - 6)) {
+          (distance + 6)) {
 
         // actual pid
         double out =
@@ -61,7 +61,7 @@ void pid::linedrive(double distance, double dir, float velocity, double porporti
             RightDriveSmart.rotation(rotationUnits::deg)) /
            2) *
               12.57 / 3100 <
-          (distance + 6)) {
+          (distance + -6)) {
         // actual pid
         double out =
             distance - (((LeftDriveSmart.rotation(rotationUnits::deg) +
