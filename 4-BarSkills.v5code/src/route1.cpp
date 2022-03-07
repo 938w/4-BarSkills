@@ -35,7 +35,7 @@ void Route1::run() {
   Drivetrain.stop(brake);
   wait(0.5, sec);
   //Clamp neutral
-  Clamp.set(false);
+  Clamp.set(false); 
   //go to platform
   FourBar.spinFor(forward, 770, degrees, 100, rpm, false);
   Drivetrain.turnFor(right, 10, degrees);
@@ -51,7 +51,7 @@ void Route1::run() {
 
   //Release
   Clamp.set(true); 
-  //getbluegoal
+  //getbluegoal  
   Drivetrain.turnFor(right, 15, degrees);
   t1.reset();
   //placebluegoal and move forward while loweringfourbar
