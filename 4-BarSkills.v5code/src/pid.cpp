@@ -8,7 +8,6 @@ void pid::linedrive(double distance, double dir, double velocity, double porport
       //lower porportion causes the pid "reacting" turning amount to be lower
       //velocity changes base speed
       //just set dir to 0
-      Inertial.resetHeading();
       Inertial.resetRotation();
       LeftDriveSmart.resetRotation();
       RightDriveSmart.resetRotation();
@@ -28,13 +27,13 @@ void pid::linedrive(double distance, double dir, double velocity, double porport
             double out = distance-(((LeftDriveSmart.rotation(rotationUnits::deg)+RightDriveSmart.rotation(rotationUnits::deg))/2)*12.57/360);
 
             // 10 rpm with 20 mesc = 0.419inches
-            if (abs(lastOut - out) < 0.0419) {             
+            if (abs(lastOut - out) < 0.0209) {             
               count++;
             }
 
-            if (count > 4) {
+            if (count > 5) {
               Mobile.Screen.print("exit");
-              break;
+              //break;
             }
             
             lastOut = out;
@@ -72,7 +71,7 @@ void pid::linedrive(double distance, double dir, double velocity, double porport
 
             if (count > 4) {
               Mobile.Screen.print("exit");
-              break;
+              //break;
             }
             
             lastOut = out;
