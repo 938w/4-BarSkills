@@ -3,10 +3,12 @@
 
 using namespace vex;
 
+// in inches
 int Route::drivePos() {
-  return (rightMotorA.rotation(deg) + leftMotorA.rotation(deg))/2;
+  return ((rightMotorA.rotation(deg) + leftMotorA.rotation(deg))/2) * (12.57/360);
 }
 
+// using Drivetrain.isMoving() && Route.isDriving() to check whether the robot is stuck
 bool Route::isDriving() {
   static int count = 0;
   static int last = 0;
@@ -14,9 +16,9 @@ bool Route::isDriving() {
 
   int curr = drivePos();
 
-  int target = 1;
+  int target = _driveTarget;
 
-  if(abs(last-curr) < 3)
+  if(abs(last-curr) < 0.0419)
     count++;
   else
     count = 0;

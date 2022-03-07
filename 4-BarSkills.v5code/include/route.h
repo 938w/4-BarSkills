@@ -3,11 +3,12 @@
 class Route {
 
   private:
-    int driveTarget = 0;
+    
 
   protected:
     int drivePos();
     bool isDriving();
+    int _driveTarget = 0;
   
   public:
     virtual void run();
