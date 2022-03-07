@@ -3,9 +3,10 @@
 using namespace vex;
 
 class pid {
-  private:
-    void linedrive (double distance, double dir, float velocity, double porportion, double slowdown);
+private:
+  void linedrive(double distance, double dir, double velocity,
+                 double porportion);
 
-  public:
-    void drive (double distance, double dir, float velocity, double porportion, double slowdown);
+public:
+  void drive(double distance, double dir, double velocity, double porportion);
 };

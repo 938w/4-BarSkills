@@ -21,9 +21,15 @@
 using namespace vex;
 
 int main() {
-  // // Initializing Robot Configuration. DO NOT REMOVE!
+  // Initializing Robot Configuration. DO NOT REMOVE!
   vexcodeInit();
 
+  // route1;
   Route1 route1;
-  route1.run();
+
+  // pointer to route1
+  Route *route = &route1;
+
+  // run the route
+  route->run();
 }
