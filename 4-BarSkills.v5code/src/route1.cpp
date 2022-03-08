@@ -163,6 +163,5 @@ void Route1::run() {
   Mobile.Screen.print(t2.time(sec));
   Mobile.rumble(".-.-");
  
-  Drivetrain.driveFor(forward, 20, inches);
   logger.log("end the run");
 }
