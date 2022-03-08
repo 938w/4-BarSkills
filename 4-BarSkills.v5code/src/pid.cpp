@@ -32,7 +32,7 @@ void pid::linedrive(double distance, double dir, double velocity, double porport
             }
 
             if (count > 5) {
-              Mobile.Screen.print("exit");
+              //Mobile.Screen.print("exit");
               //break;
             }
             
@@ -52,7 +52,7 @@ void pid::linedrive(double distance, double dir, double velocity, double porport
             LeftDriveSmart.spin(vex::directionType::fwd, (velocity+(dir-(Inertial.yaw())*porportion)), vex::velocityUnits::pct);
             RightDriveSmart.spin(vex::directionType::fwd, (velocity-(dir-(Inertial.yaw())*porportion)), vex::velocityUnits::pct);
           }
-          wait(20, msec);
+          wait(5, msec);
         }
 
       } else {
@@ -70,8 +70,8 @@ void pid::linedrive(double distance, double dir, double velocity, double porport
             }
 
             if (count > 4) {
-              Mobile.Screen.print("exit");
-              //break;
+              //Mobile.Screen.print("exit");
+              ////break;
             }
             
             lastOut = out;
@@ -88,7 +88,7 @@ void pid::linedrive(double distance, double dir, double velocity, double porport
             RightDriveSmart.spin(vex::directionType::fwd, (velocity-(dir-(Inertial.yaw())*porportion)), vex::velocityUnits::pct);
           }
 
-          wait(20, msec);
+          wait(5, msec);
         }
       }
       LeftDriveSmart.stop(brakeType::brake);
