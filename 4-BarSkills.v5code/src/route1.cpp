@@ -7,11 +7,12 @@
 
 using namespace vex;
 timer t1;
+timer t2;
 void Route1::run() {
   Logger logger("rout 1");
   logger.log("start the run");
   pid PID;
-
+  t2.reset(); 
   Brain.Screen.print("route 1");
  
   Mobile.Screen.print(Inertial.heading());
@@ -40,9 +41,10 @@ void Route1::run() {
   Drivetrain.driveFor(reverse, 50, inches, 80, rpm);
   
   Drivetrain.stop(brake);
-  wait(0.8, sec);
+  
   //Clamp neutral
   Clamp.set(false); 
+  wait(0.8, sec);
   //go to platform
   FourBar.spinFor(forward, 770, degrees, 100, rpm, false);
   Drivetrain.turnFor(right, 10, degrees);
@@ -62,7 +64,7 @@ void Route1::run() {
   Drivetrain.turnFor(right, 15, degrees);
   t1.reset();
   //placebluegoal and move forward while loweringfourbar
-    ForkLift.spinFor(reverse, 355, degrees, 70, rpm, false);
+    ForkLift.spinFor(reverse, 360, degrees, 70, rpm, false);
     Drivetrain.driveFor(forward, 10, inches, 120, rpm);
     FourBar.spinFor(reverse, 520, degrees, false);
     Drivetrain.driveFor(forward, 17, inches, 120, rpm);
@@ -72,43 +74,46 @@ void Route1::run() {
     Drivetrain.driveFor(reverse, 15, inches, 175, rpm);
     Drivetrain.turnFor(185, degrees, 100, rpm);
     //moveforward
-    PID.drive(-17, (Inertial.yaw()*-1), 80, 1);
+    
+    PID.drive(-17, -62.38, -80, 1);
     Mobile.Screen.newLine();
     Mobile.Screen.print(t1.time(sec));
-
   //clamp
+  
   Clamp.set(false);
   FourBar.spinFor(forward, 200, degrees);
   //turn to red
   Drivetrain.turnToHeading(-130, degrees, 150, rpm);
   //drive to red
-  Drivetrain.driveFor(forward, 30, inches, 80, rpm);
+  ForkLift.spinFor(reverse, 15, degrees, false);
+  //Drivetrain.driveFor(forward, 30, inches, 80, rpm);
+  PID.drive(33, Inertial.yaw(), 100, 1);
   //pic up red
   ForkLift.spinFor(forward, 350, degrees, 100, rpm, false);
   wait(0.5, sec);
-  FourBar.spinFor(forward, 600, degrees, 100, rpm, false);
+  FourBar.spinFor(forward, 460, degrees, 100, rpm, false);
   Drivetrain.driveFor(reverse, 26, inches, 100, rpm);
   //turn to ramp
-  Drivetrain.turnToHeading(130, degrees, 200, rpm);
-  //go to ramp
-  Drivetrain.driveFor(reverse, 30, inches, 100, rpm);
-  //turna bitmore
-  Drivetrain.turnToHeading(140, degrees, 200, rpm);
   
-  //go a bit more
-  Drivetrain.driveFor(reverse, 13, inches);
-  FourBar.spinFor(reverse, 250, degrees);
+  Drivetrain.turnToHeading(140, degrees, 200, rpm);
+  //go to ramp
+  //Drivetrain.driveFor(reverse, 50, inches, 100, rpm);
+  PID.drive(-42.5, Inertial.yaw(), -75, 1);
+  FourBar.spinFor(reverse, 90, degrees, 100, rpm);
   //turn to ramp
-  Drivetrain.turnToHeading(110, degrees, 100, rpm);
+  Drivetrain.turnToHeading(100, degrees, 100, rpm);
+  Drivetrain.driveFor(reverse, 4, inches);
   Clamp.set(true);
   wait(0.5, sec);
+  
+
   //drive out
   
   Drivetrain.turnToHeading(90, degrees, 100, rpm);
   Drivetrain.driveFor(forward, 10, inches, 180, rpm);
   FourBar.spinTo(0, degrees, 100, rpm, false);
   //Drivetrain.driveFor(forward, 50, inches, 160, rpm);
-  PID.drive(60, 90, 90, 1);
+  PID.drive(60, 90, 75, 1);
   //turn to neutral
   Drivetrain.turnToHeading(130, degrees, 160, rpm);
   //go to neutral
@@ -123,10 +128,41 @@ void Route1::run() {
   Drivetrain.driveFor(reverse, 50, inches);
   Drivetrain.turnToHeading(-90, degrees, 100, rpm);
   Drivetrain.driveFor(reverse, 20, inches, 100, rpm);
+  //Lower fourbar
+  FourBar.spinFor(reverse, 150, degrees, 100, rpm); 
   //release
   Clamp.set(true);
   wait(0.7, sec);
   //drive
+
+  ForkLift.spinFor(reverse, 360, degrees, 70, rpm, false);
+    Drivetrain.driveFor(forward, 10, inches, 120, rpm);
+    FourBar.spinTo(0, degrees, false);
+    Drivetrain.driveFor(forward, 16, inches, 120, rpm);
+    Drivetrain.stop(brake);
+    wait(0.3, sec);
+    //moveback
+    Drivetrain.driveFor(reverse, 15, inches, 175, rpm);
+    Drivetrain.turnFor(185, degrees, 100, rpm);
+    //moveforward
+    
+    PID.drive(-17, Inertial.yaw(), -80, 1);
+    Mobile.Screen.newLine();
+    Mobile.Screen.print(t1.time(sec));
+    Clamp.set(false);
+  //liftup and turnaround
+  FourBar.spinFor(forward, 500, degrees, false);
+  wait(0.4, sec);
+  Drivetrain.turnToHeading(-90, degrees);
+  Drivetrain.driveFor(reverse, 30, inches, 160, rpm);
+  Clamp.set(true);
+
+
+
+  Mobile.Screen.print("L");
+  Mobile.Screen.print(t2.time(sec));
+  Mobile.rumble(".-.-");
+ 
   Drivetrain.driveFor(forward, 20, inches);
   logger.log("end the run");
 }
