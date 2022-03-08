@@ -18,6 +18,8 @@
 #include "pid.h"
 #include "route1.h"
 #include "vex.h"
+#include "logging.h"
+
 using namespace vex;         
 
 int main() {
@@ -29,9 +31,6 @@ int main() {
 
   // pointer to route1
   Route *route = &route1;
-  //un the route
+  // run the route
   route->run();
-
- 
-
 }

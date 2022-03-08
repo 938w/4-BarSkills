@@ -1,10 +1,15 @@
+
 #include "route1.h"
+#include "logging.h"
 #include "vex.h"
 #include "pid.h"
 #include <cmath>
+
 using namespace vex;
 timer t1;
 void Route1::run() {
+  Logger logger("rout 1");
+  logger.log("start the run");
   pid PID;
 
   Brain.Screen.print("route 1");
@@ -123,5 +128,5 @@ void Route1::run() {
   wait(0.7, sec);
   //drive
   Drivetrain.driveFor(forward, 20, inches);
-  
+  logger.log("end the run");
 }
