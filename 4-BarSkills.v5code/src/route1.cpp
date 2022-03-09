@@ -130,11 +130,11 @@ void Route1::run() {
   //turnaround
   wait(0.7, sec);
   FourBar.spinFor(forward, 150, degrees, false);
-  Drivetrain.turnToHeading(-55, degrees, 140, rpm);
+  Drivetrain.turnToHeading(-45, degrees, 140, rpm);
   FourBar.spinFor(forward, 520, degrees, false);
   Drivetrain.driveFor(reverse, 45, inches);
   Drivetrain.turnToHeading(-90, degrees, 100, rpm);
-  Drivetrain.driveFor(reverse, 12, inches, 100, rpm);
+  Drivetrain.driveFor(reverse, 8, inches, 100, rpm);
   //Lower fourbar
   FourBar.spinFor(reverse, 150, degrees, 100, rpm); 
   //release
