@@ -20,7 +20,7 @@ void pid::linedrive(double distance, double dir, double velocity, double porport
         while (((LeftDriveSmart.rotation(rotationUnits::deg)+RightDriveSmart.rotation(rotationUnits::deg))/2)*12.57/360 < distance) {
           // getting closer
           // always slow down when there is 1 rotation
-          if(((LeftDriveSmart.rotation(rotationUnits::deg)+RightDriveSmart.rotation(rotationUnits::deg))/2)*12.57/360 > (distance - 12.57*2)) {
+          if(((LeftDriveSmart.rotation(rotationUnits::deg)+RightDriveSmart.rotation(rotationUnits::deg))/2)*12.57/360 > (distance - 10*2)) {
            
             // actual pid
             // disstance to the target
@@ -40,7 +40,7 @@ void pid::linedrive(double distance, double dir, double velocity, double porport
 
             // new velocity slow until 10%
             // every step 10 percent within 20ms
-            double newVelocity = velocity * (out / (12.57*2));
+            double newVelocity = velocity * (out / (10*2));
             if (newVelocity < 10) newVelocity = 10;
 
             double error = (dir-(Inertial.yaw()*porportion));
@@ -59,7 +59,7 @@ void pid::linedrive(double distance, double dir, double velocity, double porport
         //driving backwards
         while (((LeftDriveSmart.rotation(rotationUnits::deg)+RightDriveSmart.rotation(rotationUnits::deg))/2)*12.57/360 > distance) {
           //getting closer 
-          if(((LeftDriveSmart.rotation(rotationUnits::deg)+RightDriveSmart.rotation(rotationUnits::deg))/2)*12.57/360 < (distance+12.57*2)) {
+          if(((LeftDriveSmart.rotation(rotationUnits::deg)+RightDriveSmart.rotation(rotationUnits::deg))/2)*12.57/360 < (distance+10*2)) {
         
             //actual pid
             double out = distance-(((LeftDriveSmart.rotation(rotationUnits::deg)+RightDriveSmart.rotation(rotationUnits::deg))/2)*12.57/360);
@@ -77,7 +77,7 @@ void pid::linedrive(double distance, double dir, double velocity, double porport
             lastOut = out;
             // new velocity slow until 10%
             // every step 10 percent within 20ms
-            float newVelocity = -1 * velocity * (out / (12.57*2));
+            float newVelocity = -1 * velocity * (out / (10*2));
             if (newVelocity > -10) newVelocity = -10;
 
             LeftDriveSmart.spin(vex::directionType::fwd, newVelocity+(dir-(Inertial.yaw()*porportion)), vex::velocityUnits::pct);

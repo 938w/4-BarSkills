@@ -1,5 +1,5 @@
 
-#include "route1.h"
+#include "route2.h"
 #include "logging.h"
 #include "vex.h"
 #include "pid.h"
@@ -7,14 +7,14 @@
 
 using namespace vex;
 
-void Route1::run() {
+void Route2::run() {
   timer t1;
 timer t2;
-  Logger logger("rout 1");
+  Logger logger("route2");
   logger.log("start the run");
   pid PID;
   t2.reset(); 
-  Brain.Screen.print("route 1");
+  Brain.Screen.print("route 2");
  
   Mobile.Screen.print(Inertial.heading());
   //Set Velocity
@@ -35,7 +35,9 @@ timer t2;
   //Drivetrain.driveFor(reverse, 16, inches, 120, rpm);
   PID.drive(-16, 0, -90, 1);
   //Turn 90 degrees to face neutral goal
-  Drivetrain.turnToHeading(110, degrees, 100, rpm);
+  Drivetrain.turnToHeading(105, degrees, 100, rpm);
+  Mobile.Screen.newLine();
+  Mobile.Screen.print(Inertial.yaw()); 
   //Activate clamp
   Clamp.set(true); 
   
@@ -50,7 +52,7 @@ timer t2;
   wait(0.8, sec);
   //go to platform
   FourBar.spinFor(forward, 770, degrees, 100, rpm, false);
-  Drivetrain.turnFor(right, 10, degrees);
+  Drivetrain.turnFor(right, 13, degrees);
   wait(0.2, sec);
   //Drivetrain.driveFor(reverse, 54, inches, 100,rpm);
   PID.drive(-54, Inertial.yaw(), -100, 1);
@@ -65,7 +67,7 @@ timer t2;
   //Release
   Clamp.set(true); 
   //getbluegoal  
-  Drivetrain.turnFor(right, 15, degrees);
+  Drivetrain.turnFor(right, 13, degrees);
   t1.reset();
   //placebluegoal and move forward while loweringfourbar
     ForkLift.spinFor(reverse, 360, degrees, 70, rpm, false);
@@ -79,11 +81,10 @@ timer t2;
     Drivetrain.turnFor(180, degrees, 100, rpm);
     //moveforward
     
-    PID.drive(-17, -62.38, -80, 1);
+    PID.drive(-20, 0, -80, 1);
     Mobile.Screen.newLine();
     Mobile.Screen.print(t1.time(sec));
   //clamp
-  
   Clamp.set(false);
   FourBar.spinFor(forward, 200, degrees);
   //turn to red

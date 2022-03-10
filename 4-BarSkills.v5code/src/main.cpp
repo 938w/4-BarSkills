@@ -17,6 +17,7 @@
 
 #include "pid.h"
 #include "route1.h"
+#include "route2.h"
 #include "vex.h"
 #include "logging.h"
 
@@ -28,9 +29,7 @@ int main() {
 
   // route1;
   Route1 route1;
+  Route2 route2;
 
-  // pointer to route1
-  Route *route = &route1;
-  // run the route
-  route->run();
+  route2.run();
 }
