@@ -26,10 +26,6 @@ using namespace vex;
 int main() {
   // Initializing Robot Configuration. DO NOT REMOVE!
   vexcodeInit();
-
-  // route1;
-  Route1 route1;
   Route2 route2;
-
   route2.run();
 }

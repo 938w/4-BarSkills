@@ -11,7 +11,6 @@ void pid::linedrive(double distance, double dir, double velocity, double porport
       Inertial.resetRotation();
       LeftDriveSmart.resetRotation();
       RightDriveSmart.resetRotation();
-
       double lastOut = 0;
       int count = 0;
 
@@ -20,7 +19,7 @@ void pid::linedrive(double distance, double dir, double velocity, double porport
         while (((LeftDriveSmart.rotation(rotationUnits::deg)+RightDriveSmart.rotation(rotationUnits::deg))/2)*12.57/360 < distance) {
           // getting closer
           // always slow down when there is 1 rotation
-          if(((LeftDriveSmart.rotation(rotationUnits::deg)+RightDriveSmart.rotation(rotationUnits::deg))/2)*12.57/360 > (distance - 10*2)) {
+          if(((LeftDriveSmart.rotation(rotationUnits::deg)+RightDriveSmart.rotation(rotationUnits::deg))/2)*12.57/360 > (distance - 20)) {
            
             // actual pid
             // disstance to the target
@@ -40,34 +39,37 @@ void pid::linedrive(double distance, double dir, double velocity, double porport
 
             // new velocity slow until 10%
             // every step 10 percent within 20ms
-            double newVelocity = velocity * (out / (10*2));
+            double newVelocity = velocity * (out / (20));
             if (newVelocity < 10) newVelocity = 10;
+          
 
             double error = (dir-(Inertial.yaw()*porportion));
-
-            LeftDriveSmart.spin(vex::directionType::fwd, newVelocity+error, vex::velocityUnits::pct);
-            RightDriveSmart.spin(vex::directionType::fwd, newVelocity-error, vex::velocityUnits::pct);
+            LeftDriveSmart.spin(vex::directionType::fwd, newVelocity+(error), vex::velocityUnits::pct);
+            RightDriveSmart.spin(vex::directionType::fwd, newVelocity-(error), vex::velocityUnits::pct);
           } else {
+            double error = (dir-(Inertial.yaw()*porportion));
+
             //actual pid     
-            LeftDriveSmart.spin(vex::directionType::fwd, (velocity+(dir-(Inertial.yaw())*porportion)), vex::velocityUnits::pct);
-            RightDriveSmart.spin(vex::directionType::fwd, (velocity-(dir-(Inertial.yaw())*porportion)), vex::velocityUnits::pct);
+            LeftDriveSmart.spin(vex::directionType::fwd, (velocity+(error)), vex::velocityUnits::pct);
+            RightDriveSmart.spin(vex::directionType::fwd, (velocity-(error)), vex::velocityUnits::pct);
           }
-          wait(5, msec);
+          wait(1, msec);
         }
 
       } else {
         //driving backwards
         while (((LeftDriveSmart.rotation(rotationUnits::deg)+RightDriveSmart.rotation(rotationUnits::deg))/2)*12.57/360 > distance) {
           //getting closer 
-          if(((LeftDriveSmart.rotation(rotationUnits::deg)+RightDriveSmart.rotation(rotationUnits::deg))/2)*12.57/360 < (distance+10*2)) {
+          if(((LeftDriveSmart.rotation(rotationUnits::deg)+RightDriveSmart.rotation(rotationUnits::deg))/2)*12.57/360 < (distance + 20)) {
         
             //actual pid
             double out = distance-(((LeftDriveSmart.rotation(rotationUnits::deg)+RightDriveSmart.rotation(rotationUnits::deg))/2)*12.57/360);
 
             // 10 rpm with 20 mesc = 0.419inches 
             if (abs(lastOut - out) < 0.0419) {             
-              count++;
+              
             }
+            count++;
 
             if (count > 4) {
               //Mobile.Screen.print("exit");
@@ -77,7 +79,8 @@ void pid::linedrive(double distance, double dir, double velocity, double porport
             lastOut = out;
             // new velocity slow until 10%
             // every step 10 percent within 20ms
-            float newVelocity = -1 * velocity * (out / (10*2));
+            float newVelocity = -1 * velocity * (out / (20));
+           
             if (newVelocity > -10) newVelocity = -10;
 
             LeftDriveSmart.spin(vex::directionType::fwd, newVelocity+(dir-(Inertial.yaw()*porportion)), vex::velocityUnits::pct);
@@ -88,7 +91,7 @@ void pid::linedrive(double distance, double dir, double velocity, double porport
             RightDriveSmart.spin(vex::directionType::fwd, (velocity-(dir-(Inertial.yaw())*porportion)), vex::velocityUnits::pct);
           }
 
-          wait(5, msec);
+          wait(1, msec);
         }
       }
       LeftDriveSmart.stop(brakeType::brake);
