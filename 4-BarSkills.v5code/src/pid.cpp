@@ -3,7 +3,7 @@
 
 using namespace std;
 
-void pid::linedrive(double distance, double dir, double velocity, double porportion) {
+void pid::linedrive(double distance, double dir, double velocity, double porportion, int errorcorrect) {
    //higher porportion causes the pid "reacting" turning amount to be higher
       //lower porportion causes the pid "reacting" turning amount to be lower
       //velocity changes base speed
@@ -43,11 +43,11 @@ void pid::linedrive(double distance, double dir, double velocity, double porport
             if (newVelocity < 10) newVelocity = 10;
           
 
-            double error = (dir-(Inertial.yaw()*porportion));
+            double error = (dir-(Inertial.yaw()*porportion))*errorcorrect;
             LeftDriveSmart.spin(vex::directionType::fwd, newVelocity+(error), vex::velocityUnits::pct);
             RightDriveSmart.spin(vex::directionType::fwd, newVelocity-(error), vex::velocityUnits::pct);
           } else {
-            double error = (dir-(Inertial.yaw()*porportion));
+            double error = (dir-(Inertial.yaw()*porportion))*errorcorrect;
 
             //actual pid     
             LeftDriveSmart.spin(vex::directionType::fwd, (velocity+(error)), vex::velocityUnits::pct);
@@ -83,12 +83,12 @@ void pid::linedrive(double distance, double dir, double velocity, double porport
            
             if (newVelocity > -10) newVelocity = -10;
 
-            LeftDriveSmart.spin(vex::directionType::fwd, newVelocity+(dir-(Inertial.yaw()*porportion)), vex::velocityUnits::pct);
-            RightDriveSmart.spin(vex::directionType::fwd, newVelocity-(dir-(Inertial.yaw()*porportion)), vex::velocityUnits::pct);
+            LeftDriveSmart.spin(vex::directionType::fwd, newVelocity+(dir-(Inertial.yaw()*porportion))*errorcorrect, vex::velocityUnits::pct);
+            RightDriveSmart.spin(vex::directionType::fwd, newVelocity-(dir-(Inertial.yaw()*porportion))*errorcorrect, vex::velocityUnits::pct);
           } else{
             //actual pid
-            LeftDriveSmart.spin(vex::directionType::fwd, (velocity+(dir-(Inertial.yaw())*porportion)), vex::velocityUnits::pct);
-            RightDriveSmart.spin(vex::directionType::fwd, (velocity-(dir-(Inertial.yaw())*porportion)), vex::velocityUnits::pct);
+            LeftDriveSmart.spin(vex::directionType::fwd, (velocity+(dir-(Inertial.yaw())*porportion)*errorcorrect), vex::velocityUnits::pct);
+            RightDriveSmart.spin(vex::directionType::fwd, (velocity-(dir-(Inertial.yaw())*porportion)*errorcorrect), vex::velocityUnits::pct);
           }
 
           wait(1, msec);
@@ -98,6 +98,10 @@ void pid::linedrive(double distance, double dir, double velocity, double porport
       RightDriveSmart.stop(brakeType::brake);
 }
 
+void pid::drive(double distance, double dir, double velocity, double porportion, int errorcorrect) {
+  linedrive(distance, dir, velocity, porportion, errorcorrect);
+}
+
 void pid::drive(double distance, double dir, double velocity, double porportion) {
-  linedrive(distance, dir, velocity, porportion);
+  linedrive(distance, dir, velocity, porportion, 1);
 }
